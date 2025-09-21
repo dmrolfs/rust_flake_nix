@@ -1,0 +1,22 @@
+# Quick verification test - low load
+concurrency: 2
+base: "http://localhost:3030"
+iterations: 20
+rampup: 5
+
+plan:
+  - name: "Health Check"
+    request:
+      url: "/query"
+      method: POST
+      headers:
+        Content-Type: application/json
+      body: '{"sql": "SELECT 1 as health_check"}'
+
+  - name: "Show Catalogs"
+    request:
+      url: "/query"
+      method: POST
+      headers:
+        Content-Type: application/json
+      body: '{"sql": "SHOW CATALOGS"}'

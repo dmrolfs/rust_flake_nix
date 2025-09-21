@@ -110,7 +110,7 @@ status:
 
 # View service logs
 logs container="":
-    @if [ -n "{{service}}" ]; then \
+    @if [ -n "{{container}}" ]; then \
         podman-compose logs -f {{container}}; \
     else \
         podman-compose logs -f; \

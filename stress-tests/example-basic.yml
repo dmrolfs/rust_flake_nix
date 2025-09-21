@@ -1,0 +1,28 @@
+# Basic API functionality stress test
+concurrency: 5
+base: "http://localhost:3030"
+iterations: 100
+rampup: 10
+
+plan:
+  - name: "Health Check"
+    request:
+      url: "/query"
+      method: POST
+      headers:
+        Content-Type: application/json
+      body: '{"sql": "SELECT 1 as health_check"}'
+
+  - name: "Show Catalogs"
+    request:
+      url: "/query"
+      method: POST
+      headers:
+        Content-Type: application/json
+      body: '{"sql": "SHOW CATALOGS"}'
+
+  - name: "Create Test Table"
+    request:
+      url: "/create_test_table"
+      method: POST
+      body: ""

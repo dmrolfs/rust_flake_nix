@@ -1,0 +1,42 @@
+# Heavy load stress test - high concurrency
+concurrency: 20
+base: "http://localhost:3030"
+iterations: 500
+rampup: 30
+
+plan:
+  - name: "Simple Query"
+    weight: 40
+    request:
+      url: "/query"
+      method: POST
+      headers:
+        Content-Type: application/json
+      body: '{"sql": "SELECT 1"}'
+
+  - name: "Catalog Query"
+    weight: 30
+    request:
+      url: "/query"
+      method: POST
+      headers:
+        Content-Type: application/json
+      body: '{"sql": "SHOW CATALOGS"}'
+
+  - name: "Analytical Query"
+    weight: 20
+    request:
+      url: "/query"
+      method: POST
+      headers:
+        Content-Type: application/json
+      body: '{"sql": "SELECT genre, AVG(rating) FROM iceberg.demo.movies GROUP BY genre"}'
+
+  - name: "Complex Query"
+    weight: 10
+    request:
+      url: "/query"
+      method: POST
+      headers:
+        Content-Type: application/json
+      body: '{"sql": "SELECT m1.title, m1.rating, m2.title as similar_movie FROM iceberg.demo.movies m1 JOIN iceberg.demo.movies m2 ON m1.genre = m2.genre AND m1.id != m2.id WHERE m1.rating > 8.5"}'
