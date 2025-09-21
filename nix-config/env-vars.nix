@@ -16,7 +16,7 @@
   PROTOC_INCLUDE = "${pkgs.protobuf}/include";
   
   # Starship
-  STARSHIP_CONFIG = "./config/starship.toml";
+  STARSHIP_CONFIG = "./nix-config/starship.toml";
   
   # Editor preferences
   EDITOR = "vim";

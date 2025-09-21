@@ -138,16 +138,16 @@
         ];
 
         # DMR: Reference external starship configuration file
-        starshipConfig = ./config/starship.toml;
+        starshipConfig = ./nix-config/starship.toml;
 
         # DMR: Reference external shell aliases configuration
-        shellAliasesConfig = import ./config/shell-aliases.nix;
+        shellAliasesConfig = import ./nix-config/shell-aliases.nix;
 
         # DMR: Reference external environment configuration (general app development)
-        commonEnvVars = import ./config/env-vars.nix { inherit pkgs; };
+        commonEnvVars = import ./nix-config/env-vars.nix { inherit pkgs; };
 
         # DMR: Reference external common shell hook
-        commonShellHook = import ./config/shell-hook.nix { inherit pkgs rustToolchain; };
+        commonShellHook = import ./nix-config/shell-hook.nix { inherit pkgs rustToolchain; };
 
         # DMR: Common arguments for builds (both crane and traditional)
         commonArgs = {
@@ -361,11 +361,11 @@
           create-precommit-config = flake-utils.lib.mkApp {
             drv = pkgs.writeShellScriptBin "create-precommit-config" ''
               echo "📝 Creating .pre-commit-config.yaml from template..."
-              if [ -f config/pre-commit-template.yaml ]; then
-                cp config/pre-commit-template.yaml .pre-commit-config.yaml
+              if [ -f nix-config/pre-commit-template.yaml ]; then
+                cp nix-config/pre-commit-template.yaml .pre-commit-config.yaml
                 echo "✅ .pre-commit-config.yaml created from template"
               else
-                echo "❌ Template not found at config/pre-commit-template.yaml"
+                echo "❌ Template not found at nix-config/pre-commit-template.yaml"
                 exit 1
               fi
               echo "Run: nix run .#setup-precommit to install hooks"
